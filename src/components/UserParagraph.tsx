@@ -1,0 +1,30 @@
+interface Props {
+  paragraph: string;
+  typed: string;
+  hasError: boolean;
+}
+
+export default function UserParagraph({ paragraph, typed, hasError }: Props) {
+  return (
+    <div className="max-w-3xl bg-slate-800 p-6 rounded-lg border border-slate-700">
+      <p className="text-lg">
+        {paragraph.split("").map((char, i) => {
+          let className = "";
+
+          if (i < typed.length) {
+            className = char === typed[i] ? "text-green-400" : "text-red-400";
+            if (hasError && i === typed.length - 1) className += " underline";
+          } else if (!hasError && i === typed.length) {
+            className = "underline";
+          }
+
+          return (
+            <span key={i} className={className}>
+              {char}
+            </span>
+          );
+        })}
+      </p>
+    </div>
+  );
+}

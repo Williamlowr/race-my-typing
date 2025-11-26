@@ -8,15 +8,13 @@ interface Props {
 
 export default function GhostReplay({ level, onLoaded }: Props) {
   useEffect(() => {
-    fetch(`http://localhost:5000/ghosts/p${level}`)
-      .then(r => r.json())
+    fetch(`/assets/ghosts/p${level}.json`)
+      .then((r) => r.json())
       .then(onLoaded)
-      .catch(err => console.error("Failed to load ghost file:", err));
+      .catch((err) =>
+        console.error(`Failed to load ghost: /assets/ghosts/p${level}.json`, err)
+      );
   }, [level]);
 
-  return (
-    <p className="text-sm text-slate-300">
-      Loading ghost for Level {level}...
-    </p>
-  );
+  return <p className="text-sm text-slate-300">Loading ghost…</p>;
 }
