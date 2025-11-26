@@ -1,35 +1,53 @@
-import { useEffect, useState } from "react";
-import { type GhostEntry } from "../utilities/loadGhost";
+import { useState, useEffect, useRef } from "react";
+import { type GhostEntry } from "../types/GhostEntry";
 
-export default function useGhost(
-  ghost: GhostEntry[] | null,
-  raceStarted: boolean
-) {
-  const [ghostIndex, setGhostIndex] = useState(0);
+export default function useGhost(ghost: GhostEntry[] | null, raceStarted: boolean) {
+  const [ghostBuffer, setGhostBuffer] = useState<string[]>([]);
+  const startTimeRef = useRef<number | null>(null);
+  const currentIndexRef = useRef(0);
 
   useEffect(() => {
-    if (!ghost || ghost.length === 0 || !raceStarted) {
+    // Reset anytime ghost changes OR race stops
+    if (!ghost || !raceStarted) {
+      setGhostBuffer([]);
+      startTimeRef.current = null;
+      currentIndexRef.current = 0;
       return;
     }
 
-    // reset ghost cursor
-    setGhostIndex(0);
-    const startTime = performance.now();
+    // Only set start time once
+    if (startTimeRef.current === null) {
+      startTimeRef.current = performance.now();
+    }
 
     const interval = setInterval(() => {
-      const now = performance.now();
-      const elapsed = (now - startTime) / 1000;
+      const elapsed = (performance.now() - startTimeRef.current!) / 1000;
 
-      setGhostIndex((current) => {
-        while (current < ghost.length && ghost[current].time <= elapsed) {
-          current++;
+      while (
+        currentIndexRef.current < ghost.length &&
+        ghost[currentIndexRef.current].time <= elapsed
+      ) {
+        const entry = ghost[currentIndexRef.current];
+
+        if (entry.keysym === "BackSpace") {
+          setGhostBuffer((prev) => prev.slice(0, -1));
+        } else if (entry.keysym === "space") {
+          setGhostBuffer((prev) => [...prev, " "]);
+          } else if (entry.keysym === "period") {
+          setGhostBuffer((prev) => [...prev, "."]);
+        } else if (entry.keysym.length === 1) {
+          setGhostBuffer((prev) => [...prev, entry.keysym]);
         }
-        return current;
-      });
-    }, 5);
+        // ignore shift/ctrl/etc
+
+        currentIndexRef.current++;
+      }
+    }, 16);
 
     return () => clearInterval(interval);
   }, [ghost, raceStarted]);
 
-  return ghostIndex;
+  return {
+    ghostBuffer: ghostBuffer.join(""),
+  };
 }

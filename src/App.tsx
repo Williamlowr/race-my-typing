@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LiveTyping from "./components/LiveTyping";
 import LevelSelector from "./components/LevelSelector";
 import GhostReplay from "./components/GhostReplay";
@@ -7,7 +7,7 @@ import GhostParagraph from "./components/GhostParagraph";
 import useTyping from "./hooks/useTyping";
 import useGhost from "./hooks/useGhost";
 import { paragraphs } from "./data/paragraphs";
-import { type GhostEntry } from "./utilities/loadGhost";
+import { type GhostEntry } from "./types/GhostEntry";
 import RaceBar from "./components/RaceBar";
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
     }
   });
 
-  const ghostIndex = useGhost(ghost, raceStarted);
+  const { ghostBuffer } = useGhost(ghost, raceStarted);
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center py-10 gap-6">
@@ -52,11 +52,11 @@ export default function App() {
         typedLength={
           typed.split("").filter((c, i) => c === currentParagraph[i]).length
         }
-        ghostLength={ghost?.length ?? 1}
-        ghostIndex={ghostIndex}
+        ghostIndex={ghostBuffer.length}
+        ghostLength={currentParagraph.length}
       />
 
-      <GhostParagraph paragraph={currentParagraph} ghostIndex={ghostIndex} />
+      <GhostParagraph paragraph={currentParagraph} ghostBuffer={ghostBuffer} />
 
       <UserParagraph
         paragraph={currentParagraph}
@@ -67,8 +67,8 @@ export default function App() {
       <LiveTyping
         value={typed}
         onChange={(v) => {
-          // Auto-start race on first key
-          if (!raceStarted && typed.length === 0 && v.length === 1) {
+          if (!raceStarted && typed.length === 0 && v.length > 0) {
+            console.log("Race starting!"); // Add this
             setRaceStarted(true);
           }
           handleType(v);

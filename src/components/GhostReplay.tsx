@@ -1,20 +1,26 @@
-import React, { useEffect } from "react";
-import { type GhostEntry } from "../utilities/loadGhost";
-
+import { useEffect } from "react";
+import { type GhostEntry } from "../types/GhostEntry";
 interface Props {
   level: number;
-  onLoaded: (ghost: GhostEntry[]) => void;
+  onLoaded: (data: GhostEntry[]) => void;
 }
 
 export default function GhostReplay({ level, onLoaded }: Props) {
   useEffect(() => {
-    fetch(`/assets/ghosts/p${level}.json`)
-      .then((r) => r.json())
-      .then(onLoaded)
-      .catch((err) =>
-        console.error(`Failed to load ghost: /assets/ghosts/p${level}.json`, err)
-      );
+    const loadGhost = async () => {
+      try {
+        const res = await fetch(`/assets/ghosts/p${level}.json`);
+        if (!res.ok) throw new Error("Failed to load ghost");
+        const data: GhostEntry[] = await res.json();
+        onLoaded(data);
+      } catch (err) {
+        console.error("Ghost load error:", err);
+        onLoaded([]); // prevent null issues
+      }
+    };
+
+    loadGhost();
   }, [level]);
 
-  return <p className="text-sm text-slate-300">Loading ghost…</p>;
+  return null;
 }
