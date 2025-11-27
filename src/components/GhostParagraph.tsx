@@ -26,7 +26,7 @@ export default function GhostParagraph({ race }: Props) {
         symbol="|"
       />
 
-      <div ref={paragraphRef} className="text-lg text-center">
+      <div ref={paragraphRef} className="text-lg font-mono text-center">
         {paragraph.split("").map((char, i) => {
           const g = ghostBuffer[i];
           const correct = g === char;
