@@ -17,9 +17,8 @@ export default function UserParagraph({ race }: Props) {
 
           if (i < typed.length) {
             className = char === typed[i] ? "text-green-400" : "text-red-400";
-            if (hasError && i === typed.length - 1) className += " underline";
-          } else if (!hasError && i === typed.length) {
-            className = "underline";
+          } else if (i === typed.length) {
+            className = hasError ? "text-red-400 underline" : "underline";
           }
 
           return (

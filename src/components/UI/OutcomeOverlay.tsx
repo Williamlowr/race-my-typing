@@ -3,9 +3,11 @@ type RaceResult = "win" | "loss" | null;
 interface Props {
   visible: boolean;
   result: RaceResult;
+  hasError?: boolean;
 }
 
-export default function OutcomeOverlay({ visible, result }: Props) {
+export default function OutcomeOverlay({ visible, result, hasError }: Props) {
+  const isLoss = hasError || result === "loss"; 
   return (
     <div
       className={`
@@ -26,7 +28,7 @@ export default function OutcomeOverlay({ visible, result }: Props) {
               ${
                 result === "win"
                   ? "bg-green-500/15"
-                  : result === "loss"
+                  : isLoss
                   ? "bg-red-500/15"
                   : "bg-transparent"
               }

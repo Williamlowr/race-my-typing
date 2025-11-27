@@ -52,8 +52,9 @@ export default function App() {
       </div>
 
       <OutcomeOverlay
-        visible={raceState.postRace}
+        visible={raceState.postRace || raceState.hasError}
         result={raceState.results[raceState.level - 1]}
+        hasError={raceState.hasError}
       />
     </div>
   );
