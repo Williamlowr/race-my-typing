@@ -19,16 +19,18 @@ export default function RaceBar({
       {/* Ghost bar */}
       <div className="h-3 bg-slate-700 rounded">
         <div
-          className="h-full bg-yellow-400 rounded"
+          className="h-full bg-yellow-400 rounded transition-all duration-200 ease-out"
           style={{ width: `${ghostPct}%` }}
         />
       </div>
-      <div className="text-xs text-yellow-300">👻 Ghost: {ghostPct.toFixed(1)}%</div>
+      <div className="text-xs text-yellow-300">
+        👻 Ghost: {ghostPct.toFixed(1)}%
+      </div>
 
       {/* User bar */}
       <div className="h-3 bg-slate-700 rounded">
         <div
-          className="h-full bg-blue-500 rounded"
+          className="h-full bg-blue-500 rounded transition-all duration-200 ease-out"
           style={{ width: `${userPct}%` }}
         />
       </div>

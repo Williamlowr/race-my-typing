@@ -15,12 +15,13 @@ import Toast from "./components/UI/Toast";
 import { useLock } from "./hooks/useLock";
 import { useWpm } from "./hooks/useWpm";
 import { usePostRace } from "./hooks/usePostRace";
+import WpmDisplay from "./components/WpmDisplay";
+import { useRaceLifecycle } from "./hooks/useRaceLifecycle";
 
 export default function App() {
   const [level, setLevel] = useState(1);
   const [ghost, setGhost] = useState<GhostEntry[] | null>(null);
   const currentParagraph = paragraphs[level - 1];
-  const [raceStarted, setRaceStarted] = useState(false);
   const [raceStartTime, setRaceStartTime] = useState<number | null>(null);
   const [results, setResults] = useState<("win" | "loss" | null)[]>(
     Array(10).fill(null)
@@ -31,22 +32,11 @@ export default function App() {
     hasError,
     handleType,
     reset: resetTyping,
+    correctCount,
   } = useTyping(currentParagraph);
 
-  const { ghostTypedBuffer, ghostEventBuffer, resetGhost } = useGhost(
-    ghost,
-    raceStarted
-  );
-  const { toast, showToast } = useToast();
+  const { toast, showToast, hideToast } = useToast();
   const { locked: raceLocked, lock: lockRace } = useLock();
-  const typedCount = typed
-    .split("")
-    .filter((c, i) => c === currentParagraph[i]).length;
-  const { userWpm, ghostWpm } = useWpm({
-    typedCount,
-    ghostBuffer: ghostEventBuffer,
-    startTime: raceStartTime,
-  });
 
   const {
     postRace,
@@ -55,6 +45,42 @@ export default function App() {
     consumeKeyPress,
     endPostRace,
   } = usePostRace();
+
+  const {
+    ghostTypedBuffer,
+    ghostEventBuffer,
+    resetGhost,
+    startGhost,
+    stopGhost,
+  } = useGhost(ghost);
+
+  const {
+    raceStarted,
+    handleStartCondition,
+    handlePostRaceKey,
+    forceResetRace,
+    stopRace,
+  } = useRaceLifecycle({
+    startGhost,
+    stopGhost,
+    resetTyping,
+    resetGhost,
+    endPostRace,
+    hideToast,
+    results,
+    level,
+    setLevel,
+    setRaceStartTime,
+    cooldownDone,
+    consumeKeyPress,
+    postRace,
+  });
+
+  const { userWpm, ghostWpm } = useWpm({
+    typedCount: correctCount,
+    ghostBuffer: ghostEventBuffer,
+    startTime: raceStartTime,
+  });
 
   useRaceOutcome({
     typed,
@@ -77,15 +103,27 @@ export default function App() {
       if (level < 10) setLevel(level + 1);
     },
     resetTyping,
-    stopRace: () => setRaceStarted(false),
+    stopRace,
     setRaceStartTime: () => setRaceStartTime(null),
     beginPostRace,
   });
 
+  const handleTypingChange = (v: string) => {
+    if (postRace) {
+      handlePostRaceKey();
+      return;
+    }
+
+    handleStartCondition(v, raceLocked);
+    handleType(v);
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center py-10 gap-6">
       <h1 className="text-4xl font-bold -mb-3">Race My WPM</h1>
-      <h2 className="text-xl text-slate-400 mb-3">Feel free to select any level below; completion/winning not required</h2>
+      <h2 className="text-xl text-slate-400 mb-3">
+        Feel free to select any level below; completion/winning not required
+      </h2>
       <Toast toast={toast} />
 
       <LevelSelector
@@ -93,9 +131,7 @@ export default function App() {
         results={results}
         onChange={(n) => {
           setLevel(n);
-          resetGhost();
-          resetTyping();
-          setRaceStarted(false);
+          forceResetRace();
         }}
       />
 
@@ -107,17 +143,12 @@ export default function App() {
 
       <RaceBar
         paragraphLength={currentParagraph.length}
-        typedLength={
-          typed.split("").filter((c, i) => c === currentParagraph[i]).length
-        }
+        typedLength={correctCount}
         ghostIndex={ghostTypedBuffer.length}
         ghostLength={currentParagraph.length}
       />
 
-      <div className="flex gap-6 text-lg font-semibold">
-        <div className="text-green-400">Your WPM: {Math.round(userWpm)}</div>
-        <div className="text-blue-400">My WPM: {Math.round(ghostWpm)}</div>
-      </div>
+      <WpmDisplay user={userWpm} ghost={ghostWpm} />
 
       <UserParagraph
         paragraph={currentParagraph}
@@ -125,43 +156,30 @@ export default function App() {
         hasError={hasError}
       />
 
-      <LiveTyping
-        value={typed}
-        onChange={(v) => {
-          if (postRace) {
-            if (!cooldownDone) return;
+      <LiveTyping value={typed} onChange={handleTypingChange} />
 
-            const action = consumeKeyPress();
-            if (action === "reset-and-start") {
-              if (results[level - 1] === "win") {
-                if (level < 10) setLevel(level + 1);
-              }
-
-              resetTyping();
-              resetGhost();
-              setRaceStarted(false);
-              setRaceStartTime(null);
-              endPostRace();
-
-              setRaceStartTime(performance.now());
-              setRaceStarted(true);
-              return;
-            }
-
-            return;
-          }
-          if (
-            !raceLocked &&
-            !raceStarted &&
-            typed.length === 0 &&
-            v.length > 0
-          ) {
-            setRaceStartTime(performance.now());
-            setRaceStarted(true);
-          }
-          handleType(v);
-        }}
-      />
+      <div
+        className={`
+    fixed inset-0 flex items-center justify-center 
+    pointer-events-none transition-opacity duration-300
+    ${postRace ? "opacity-100" : "opacity-0"}
+  `}
+      >
+        {postRace && (
+          <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+            <div
+              className={`
+        w-[5000px] h-[2000px]
+        rounded-full
+        opacity-35
+        transition-opacity duration-500
+        mask-radial-fade
+        ${results[level - 1] === "win" ? "bg-green-500/15" : "bg-red-500/15"}
+      `}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 
 export function usePostRace() {
   const [postRace, setPostRace] = useState(false);

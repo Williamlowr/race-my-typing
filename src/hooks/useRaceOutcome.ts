@@ -33,6 +33,7 @@ export function useRaceOutcome({
   const userFinished = typed.length === paragraph.length;
   const ghostFinished = ghostTypedBuffer.length === paragraph.length;
 
+  // Loss condition
   useEffect(() => {
     if (!raceStarted) return;
 
@@ -47,7 +48,8 @@ export function useRaceOutcome({
       setRaceStartTime();
     }
   }, [ghostTypedBuffer]);
-  // User finishes first → WIN
+
+  // Win condition
   useEffect(() => {
     if (!raceStarted) return;
 

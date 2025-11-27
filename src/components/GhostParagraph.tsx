@@ -13,7 +13,14 @@ export default function GhostParagraph({ paragraph, ghostBuffer }: Props) {
     <div className="relative max-w-3xl bg-slate-800 p-4 rounded-lg border border-slate-700">
       <GhostCursor
         paragraphRef={paragraphRef}
-        ghostIndex={ghostBuffer.length} 
+        ghostIndex={ghostBuffer.length}
+        symbol="👻"
+      />
+
+      <GhostCursor
+        paragraphRef={paragraphRef}
+        ghostIndex={ghostBuffer.length}
+        symbol="|"
       />
 
       <div ref={paragraphRef} className="text-lg font-mono space-x-0.5">
@@ -21,6 +28,7 @@ export default function GhostParagraph({ paragraph, ghostBuffer }: Props) {
           const g = ghostBuffer[i];
           const correct = g === char;
           const wrong = g && g !== char;
+          const isCaret = i === ghostBuffer.length;
 
           return (
             <span

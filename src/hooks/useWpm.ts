@@ -20,18 +20,12 @@ export function useWpm({
       const now = performance.now();
       const elapsed = now - startTime;
 
-      //
-      // USER WPM
-      //
       if (elapsed > 200 && typedCount > 0) {
         setUserWpm(calculateWpm(typedCount, elapsed));
       } else {
         setUserWpm(0);
       }
 
-      //
-      // GHOST WPM
-      //
       if (ghostBuffer.length > 1) {
         const ghostElapsedMs =
           ghostBuffer[ghostBuffer.length - 1].time * 1000;

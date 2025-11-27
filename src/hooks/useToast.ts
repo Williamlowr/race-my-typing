@@ -9,12 +9,7 @@ export function useToast() {
     setToast({ type, message });
   };
 
-  useEffect(() => {
-    if (!toast) return;
+  const hideToast = () => setToast(null);
 
-    const id = setTimeout(() => setToast(null), 2000);
-    return () => clearTimeout(id);
-  }, [toast]);
-
-  return { toast, showToast };
+  return { toast, showToast, hideToast };
 }

@@ -15,7 +15,9 @@ export default function Toast({ toast }: Props) {
         ${toast.type === "win" ? "bg-green-600" : "bg-red-600"}
       `}
     >
-      {toast.message}
+      <div className="flex items-center gap-2">
+        <span>{toast.message}</span>
+      </div>
     </div>
   );
 }

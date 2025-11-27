@@ -3,7 +3,7 @@ import { useState } from "react";
 export function useLock() {
   const [locked, setLocked] = useState(false);
 
-  const lock = (ms = 1500) => {
+  const lock = (ms = 1000) => {
     setLocked(true);
     setTimeout(() => setLocked(false), ms);
   };
