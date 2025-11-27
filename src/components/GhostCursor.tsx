@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Ghost } from "lucide-react";
 
 interface Props {
   paragraphRef: React.RefObject<HTMLDivElement | null>;
@@ -58,7 +59,11 @@ export default function GhostCursor({
             }
       }
     >
-      {symbol}
+      {symbol === "ghost" ? (
+        <Ghost className="w-5 h-5 text-red-500 drop-shadow-[0_0_4px_rgba(250,21,21,0.6)]" />
+      ) : (
+        symbol
+      )}
     </motion.div>
   );
 }

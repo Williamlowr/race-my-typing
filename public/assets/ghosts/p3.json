@@ -1,0 +1,398 @@
+[
+  {
+    "keysym": "s",
+    "time": 0
+  },
+  {
+    "keysym": "m",
+    "time": 0.100055
+  },
+  {
+    "keysym": "a",
+    "time": 0.21986
+  },
+  {
+    "keysym": "l",
+    "time": 0.309845
+  },
+  {
+    "keysym": "l",
+    "time": 0.459916
+  },
+  {
+    "keysym": "space",
+    "time": 0.570934
+  },
+  {
+    "keysym": "m",
+    "time": 0.619946
+  },
+  {
+    "keysym": "o",
+    "time": 0.779987
+  },
+  {
+    "keysym": "m",
+    "time": 0.919962
+  },
+  {
+    "keysym": "e",
+    "time": 1.030554
+  },
+  {
+    "keysym": "n",
+    "time": 1.159968
+  },
+  {
+    "keysym": "t",
+    "time": 1.249918
+  },
+  {
+    "keysym": "s",
+    "time": 1.329939
+  },
+  {
+    "keysym": "space",
+    "time": 1.429887
+  },
+  {
+    "keysym": "m",
+    "time": 1.500061
+  },
+  {
+    "keysym": "a",
+    "time": 1.589965
+  },
+  {
+    "keysym": "t",
+    "time": 1.66994
+  },
+  {
+    "keysym": "t",
+    "time": 1.830008
+  },
+  {
+    "keysym": "e",
+    "time": 1.929928
+  },
+  {
+    "keysym": "r",
+    "time": 1.999939
+  },
+  {
+    "keysym": "space",
+    "time": 2.079987
+  },
+  {
+    "keysym": "m",
+    "time": 2.120978
+  },
+  {
+    "keysym": "o",
+    "time": 2.259941
+  },
+  {
+    "keysym": "r",
+    "time": 2.30987
+  },
+  {
+    "keysym": "e",
+    "time": 2.379833
+  },
+  {
+    "keysym": "space",
+    "time": 2.479843
+  },
+  {
+    "keysym": "t",
+    "time": 2.610857
+  },
+  {
+    "keysym": "h",
+    "time": 2.670807
+  },
+  {
+    "keysym": "a",
+    "time": 2.789934
+  },
+  {
+    "keysym": "n",
+    "time": 2.869981
+  },
+  {
+    "keysym": "space",
+    "time": 2.960086
+  },
+  {
+    "keysym": "b",
+    "time": 3.100816
+  },
+  {
+    "keysym": "i",
+    "time": 3.239859
+  },
+  {
+    "keysym": "g",
+    "time": 3.300813
+  },
+  {
+    "keysym": "space",
+    "time": 3.39993
+  },
+  {
+    "keysym": "p",
+    "time": 3.510856
+  },
+  {
+    "keysym": "l",
+    "time": 3.580809
+  },
+  {
+    "keysym": "a",
+    "time": 3.659814
+  },
+  {
+    "keysym": "n",
+    "time": 3.809816
+  },
+  {
+    "keysym": "s",
+    "time": 3.909822
+  },
+  {
+    "keysym": "space",
+    "time": 4.000936
+  },
+  {
+    "keysym": "p",
+    "time": 4.179866
+  },
+  {
+    "keysym": "r",
+    "time": 4.259812
+  },
+  {
+    "keysym": "a",
+    "time": 4.329794
+  },
+  {
+    "keysym": "c",
+    "time": 4.459784
+  },
+  {
+    "keysym": "t",
+    "time": 4.640825
+  },
+  {
+    "keysym": "i",
+    "time": 4.71982
+  },
+  {
+    "keysym": "c",
+    "time": 5.039972
+  },
+  {
+    "keysym": "e",
+    "time": 5.13086
+  },
+  {
+    "keysym": "space",
+    "time": 5.23983
+  },
+  {
+    "keysym": "p",
+    "time": 5.509884
+  },
+  {
+    "keysym": "a",
+    "time": 5.599974
+  },
+  {
+    "keysym": "t",
+    "time": 5.76983
+  },
+  {
+    "keysym": "i",
+    "time": 5.879786
+  },
+  {
+    "keysym": "e",
+    "time": 5.999805
+  },
+  {
+    "keysym": "n",
+    "time": 6.080063
+  },
+  {
+    "keysym": "c",
+    "time": 6.239854
+  },
+  {
+    "keysym": "e",
+    "time": 6.310863
+  },
+  {
+    "keysym": "space",
+    "time": 6.409786
+  },
+  {
+    "keysym": "f",
+    "time": 6.609885
+  },
+  {
+    "keysym": "o",
+    "time": 6.709793
+  },
+  {
+    "keysym": "c",
+    "time": 6.829797
+  },
+  {
+    "keysym": "u",
+    "time": 6.940786
+  },
+  {
+    "keysym": "s",
+    "time": 7.049948
+  },
+  {
+    "keysym": "space",
+    "time": 7.15113
+  },
+  {
+    "keysym": "c",
+    "time": 7.290844
+  },
+  {
+    "keysym": "l",
+    "time": 7.409797
+  },
+  {
+    "keysym": "e",
+    "time": 7.509918
+  },
+  {
+    "keysym": "a",
+    "time": 7.559819
+  },
+  {
+    "keysym": "r",
+    "time": 7.659819
+  },
+  {
+    "keysym": "l",
+    "time": 7.819794
+  },
+  {
+    "keysym": "y",
+    "time": 7.909794
+  },
+  {
+    "keysym": "space",
+    "time": 7.979789
+  },
+  {
+    "keysym": "b",
+    "time": 8.189789
+  },
+  {
+    "keysym": "r",
+    "time": 8.281082
+  },
+  {
+    "keysym": "e",
+    "time": 8.350799
+  },
+  {
+    "keysym": "a",
+    "time": 8.439787
+  },
+  {
+    "keysym": "t",
+    "time": 8.539846
+  },
+  {
+    "keysym": "h",
+    "time": 8.669818
+  },
+  {
+    "keysym": "e",
+    "time": 8.779972
+  },
+  {
+    "keysym": "space",
+    "time": 8.859835
+  },
+  {
+    "keysym": "s",
+    "time": 9.009798
+  },
+  {
+    "keysym": "l",
+    "time": 9.079783
+  },
+  {
+    "keysym": "o",
+    "time": 9.159784
+  },
+  {
+    "keysym": "w",
+    "time": 9.239778
+  },
+  {
+    "keysym": "l",
+    "time": 9.379883
+  },
+  {
+    "keysym": "y",
+    "time": 9.479931
+  },
+  {
+    "keysym": "space",
+    "time": 9.599805
+  },
+  {
+    "keysym": "k",
+    "time": 10.049897
+  },
+  {
+    "keysym": "e",
+    "time": 10.129805
+  },
+  {
+    "keysym": "e",
+    "time": 10.289951
+  },
+  {
+    "keysym": "p",
+    "time": 10.349908
+  },
+  {
+    "keysym": "space",
+    "time": 10.459866
+  },
+  {
+    "keysym": "m",
+    "time": 10.569839
+  },
+  {
+    "keysym": "o",
+    "time": 10.68983
+  },
+  {
+    "keysym": "v",
+    "time": 10.770102
+  },
+  {
+    "keysym": "i",
+    "time": 10.889799
+  },
+  {
+    "keysym": "n",
+    "time": 10.969785
+  },
+  {
+    "keysym": "g",
+    "time": 11.04979
+  }
+]

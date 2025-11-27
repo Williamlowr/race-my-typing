@@ -13,11 +13,11 @@ export default function GhostParagraph({ race }: Props) {
   const ghostBuffer = race.ghostTypedBuffer;
 
   return (
-    <div className="relative max-w-3xl bg-slate-800 p-4 rounded-lg border border-slate-700">
+    <div className="relative w-full bg-slate-800 p-5 rounded-lg border border-slate-500">
       <GhostCursor
         paragraphRef={paragraphRef}
         ghostIndex={ghostBuffer.length}
-        symbol="👻"
+        symbol="ghost"
       />
 
       <GhostCursor
@@ -26,7 +26,7 @@ export default function GhostParagraph({ race }: Props) {
         symbol="|"
       />
 
-      <div ref={paragraphRef} className="text-lg font-mono space-x-0.5">
+      <div ref={paragraphRef} className="text-lg font-mono text-center">
         {paragraph.split("").map((char, i) => {
           const g = ghostBuffer[i];
           const correct = g === char;
@@ -40,7 +40,7 @@ export default function GhostParagraph({ race }: Props) {
                   ? "text-green-400"
                   : wrong
                   ? "text-red-500"
-                  : "opacity-40"
+                  : "opacity-60"
               }
             >
               {char}

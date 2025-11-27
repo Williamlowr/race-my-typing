@@ -35,6 +35,8 @@ export default function useGhost(ghost: GhostEntry[] | null) {
         setGhostTypedBuffer((prev) => [...prev, " "]);
       } else if (entry.keysym === "period") {
         setGhostTypedBuffer((prev) => [...prev, "."]);
+      } else if (entry.keysym === "comma") {
+        setGhostTypedBuffer((prev) => [...prev, ","]);
       } else if (entry.keysym.length === 1) {
         setGhostTypedBuffer((prev) => [...prev, entry.keysym]);
       }

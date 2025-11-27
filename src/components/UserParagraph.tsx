@@ -10,8 +10,8 @@ export default function UserParagraph({ race }: Props) {
   const hasError = race.hasError;
 
   return (
-    <div className="max-w-3xl bg-slate-800 p-6 rounded-lg border border-slate-700">
-      <p className="text-lg">
+    <div className="w-full bg-slate-800 p-6 rounded-lg border border-slate-700">
+      <p className="text-lg text-center">
         {paragraph.split("").map((char, i) => {
           let className = "";
 

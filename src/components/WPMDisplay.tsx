@@ -7,10 +7,10 @@ interface Props {
 export default function WpmDisplay({ race }: Props) {
   return (
     <div className="flex gap-6 text-lg font-semibold">
-      <div className="text-green-400">
+      <div className="text-blue-400">
         Your WPM: {Math.round(race.userWpm)}
       </div>
-      <div className="text-blue-400">
+      <div className="text-red-400">
         My WPM: {Math.round(race.ghostWpm)}
       </div>
     </div>

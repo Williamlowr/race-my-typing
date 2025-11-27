@@ -18,12 +18,12 @@ export default function RaceBar({ race }: Props) {
       {/* My bar */}
       <div className="h-3 bg-slate-700 rounded">
         <div
-          className="h-full bg-yellow-400 rounded transition-all duration-200 ease-out"
+          className="h-full bg-red-400 rounded transition-all duration-200 ease-out"
           style={{ width: `${ghostPct}%` }}
         />
       </div>
-      <div className="text-xs text-yellow-300">
-        👻 Ghost: {ghostPct.toFixed(1)}%
+      <div className="text-xs text-red-400">
+        Me: {ghostPct.toFixed(1)}%
       </div>
 
       {/* User's bar */}
@@ -33,7 +33,7 @@ export default function RaceBar({ race }: Props) {
           style={{ width: `${userPct}%` }}
         />
       </div>
-      <div className="text-xs text-blue-300">👤 You: {userPct.toFixed(1)}%</div>
+      <div className="text-xs text-blue-400">You: {userPct.toFixed(1)}%</div>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function LevelSelector({ level, results, onChange }: Props) {
               flex items-center justify-center text-sm font-bold
               transition-all border
               ${color}
-              ${isCurrent ? "scale-110 border-yellow-300" : "border-slate-500"}
+              ${isCurrent ? "scale-110 border-red-500" : "border-slate-500"}
             `}
           >
             {idx}

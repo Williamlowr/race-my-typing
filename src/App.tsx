@@ -12,13 +12,8 @@ import { useFocusGuard } from "./hooks/useFocusGuard";
 import { useRef } from "react";
 
 export default function App() {
-  const {
-    toast,
-    setGhost,
-    handleTypingChange,
-    handleLevelChange,
-    raceState,
-  } = useEngine();
+  const { toast, setGhost, handleTypingChange, handleLevelChange, raceState } =
+    useEngine();
 
   const typingRef = useRef<HTMLTextAreaElement | null>(null);
   useFocusGuard(typingRef);
@@ -40,17 +35,28 @@ export default function App() {
 
       <GhostReplay level={raceState.level} onLoaded={setGhost} />
 
-      <GhostParagraph race={raceState} />
+      <div className="w-auto max-w-6xl flex flex-col gap-6">
+        <GhostParagraph race={raceState} />
 
-      <RaceBar race={raceState} />
+        <div className="self-stretch justify-items-center flex flex-col items-center">
+          <RaceBar race={raceState} />
+        </div>
+
+        <UserParagraph race={raceState} />
+      </div>
+
+      <LiveTyping
+        ref={typingRef}
+        value={raceState.typed}
+        onChange={handleTypingChange}
+      />
 
       <WpmDisplay race={raceState} />
 
-      <UserParagraph race={raceState} />
-
-      <LiveTyping ref={typingRef} value={raceState.typed} onChange={handleTypingChange} />
-
-      <OutcomeOverlay visible={raceState.postRace} result={raceState.results[raceState.level - 1]} />
+      <OutcomeOverlay
+        visible={raceState.postRace}
+        result={raceState.results[raceState.level - 1]}
+      />
     </div>
   );
 }
