@@ -1,10 +1,14 @@
+import { type RaceState } from "../hooks/useEngine";
+
 interface Props {
-  paragraph: string;
-  typed: string;
-  hasError: boolean;
+  race: RaceState;
 }
 
-export default function UserParagraph({ paragraph, typed, hasError }: Props) {
+export default function UserParagraph({ race }: Props) {
+  const paragraph = race.currentParagraph;
+  const typed = race.typed;
+  const hasError = race.hasError;
+
   return (
     <div className="max-w-3xl bg-slate-800 p-6 rounded-lg border border-slate-700">
       <p className="text-lg">

@@ -1,13 +1,16 @@
 import { useRef } from "react";
 import GhostCursor from "./GhostCursor";
+import { type RaceState } from "../hooks/useEngine";
 
 interface Props {
-  paragraph: string;
-  ghostBuffer: string[];
+  race: RaceState;
 }
 
-export default function GhostParagraph({ paragraph, ghostBuffer }: Props) {
+export default function GhostParagraph({ race }: Props) {
   const paragraphRef = useRef<HTMLDivElement | null>(null);
+
+  const paragraph = race.currentParagraph;
+  const ghostBuffer = race.ghostTypedBuffer;
 
   return (
     <div className="relative max-w-3xl bg-slate-800 p-4 rounded-lg border border-slate-700">
@@ -28,7 +31,6 @@ export default function GhostParagraph({ paragraph, ghostBuffer }: Props) {
           const g = ghostBuffer[i];
           const correct = g === char;
           const wrong = g && g !== char;
-          const isCaret = i === ghostBuffer.length;
 
           return (
             <span

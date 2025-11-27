@@ -1,5 +1,3 @@
-import React from "react";
-
 type RaceResult = "win" | "loss" | null;
 
 interface Props {

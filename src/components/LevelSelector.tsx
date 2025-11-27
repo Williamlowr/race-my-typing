@@ -11,7 +11,7 @@ export default function LevelSelector({ level, results, onChange }: Props) {
         const idx = i + 1;
         const state = results[i];
 
-        let color = "bg-slate-700"; // default (not played)
+        let color = "bg-slate-700";
         if (state === "win") color = "bg-green-600";
         if (state === "loss") color = "bg-red-600";
 

@@ -12,8 +12,9 @@ import { useRaceLifecycle } from "./useRaceLifecycle";
 
 type RaceResult = "win" | "loss" | null;
 
+export type RaceState = ReturnType<typeof useEngine>["raceState"];
+
 export function useEngine() {
-  // --- Core level + paragraph ---
   const [level, setLevel] = useState(1);
   const [ghost, setGhost] = useState<GhostEntry[] | null>(null);
   const [raceStartTime, setRaceStartTime] = useState<number | null>(null);
@@ -21,7 +22,6 @@ export function useEngine() {
 
   const currentParagraph = paragraphs[level - 1];
 
-  // --- Typing ---
   const {
     typed,
     hasError,
@@ -30,7 +30,6 @@ export function useEngine() {
     correctCount,
   } = useTyping(currentParagraph);
 
-  // --- Toast + lock + post-race ---
   const { toast, showToast, hideToast } = useToast();
   const { locked: raceLocked, lock: lockRace } = useLock();
 
@@ -42,7 +41,6 @@ export function useEngine() {
     endPostRace,
   } = usePostRace();
 
-  // --- Ghost logic ---
   const {
     ghostTypedBuffer,
     ghostEventBuffer,
@@ -51,7 +49,6 @@ export function useEngine() {
     stopGhost,
   } = useGhost(ghost);
 
-  // --- Lifecycle ---
   const {
     raceStarted,
     handleStartCondition,
@@ -74,14 +71,12 @@ export function useEngine() {
     postRace,
   });
 
-  // --- WPM ---
   const { userWpm, ghostWpm } = useWpm({
     typedCount: correctCount,
     ghostBuffer: ghostEventBuffer,
     startTime: raceStartTime,
   });
 
-  // --- Outcome handling ---
   useRaceOutcome({
     typed,
     ghostBuffer: ghostTypedBuffer,
@@ -108,7 +103,6 @@ export function useEngine() {
     beginPostRace,
   });
 
-  // --- Input handling (centralized) ---
   const handleTypingChange = (v: string) => {
     if (postRace) {
       handlePostRaceKey();
@@ -119,13 +113,11 @@ export function useEngine() {
     handleType(v);
   };
 
-  // --- Level change routing ---
   const handleLevelChange = (n: number) => {
     setLevel(n);
     forceResetRace();
   };
 
-  // --- Optional consolidated state object (future use) ---
   const raceState = {
     level,
     currentParagraph,

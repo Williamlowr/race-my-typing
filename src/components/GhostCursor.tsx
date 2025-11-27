@@ -40,22 +40,23 @@ export default function GhostCursor({
       }}
       animate={{
         x: pos.x,
-        y: [
-          pos.y - (symbol === "👻" ? 100 : 6),
-          pos.y, 
-        ],
+        y: pos.y,
       }}
-      transition={{
-        x: {
-          type: "spring",
-          stiffness: symbol === "|" ? 300 : 80,
-          damping: symbol === "|" ? 25 : 3,
-        },
-        y: {
-          duration: 0.18,
-          ease: "easeOut",
-        },
-      }}
+      transition={
+        ghostIndex === 0
+          ? { duration: 0 }
+          : {
+              x: {
+                type: "spring",
+                stiffness: symbol === "|" ? 300 : 80,
+                damping: symbol === "|" ? 25 : 3,
+              },
+              y: {
+                duration: 0.18,
+                ease: "easeOut",
+              },
+            }
+      }
     >
       {symbol}
     </motion.div>

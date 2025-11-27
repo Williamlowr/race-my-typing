@@ -1,22 +1,21 @@
+import { type RaceState } from "../hooks/useEngine";
+
 interface Props {
-  paragraphLength: number;
-  typedLength: number;
-  ghostLength: number;
-  ghostIndex: number;
+  race: RaceState;
 }
 
-export default function RaceBar({
-  paragraphLength,
-  typedLength,
-  ghostLength,
-  ghostIndex,
-}: Props) {
+export default function RaceBar({ race }: Props) {
+  const paragraphLength = race.currentParagraph.length;
+  const typedLength = race.correctCount;
+  const ghostLength = race.currentParagraph.length;
+  const ghostIndex = race.ghostTypedBuffer.length;
+
   const userPct = (typedLength / paragraphLength) * 100;
   const ghostPct = (ghostIndex / ghostLength) * 100;
 
   return (
     <div className="w-full max-w-3xl space-y-2">
-      {/* Ghost bar */}
+      {/* My bar */}
       <div className="h-3 bg-slate-700 rounded">
         <div
           className="h-full bg-yellow-400 rounded transition-all duration-200 ease-out"
@@ -27,7 +26,7 @@ export default function RaceBar({
         👻 Ghost: {ghostPct.toFixed(1)}%
       </div>
 
-      {/* User bar */}
+      {/* User's bar */}
       <div className="h-3 bg-slate-700 rounded">
         <div
           className="h-full bg-blue-500 rounded transition-all duration-200 ease-out"

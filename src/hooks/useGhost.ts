@@ -46,7 +46,7 @@ export default function useGhost(ghost: GhostEntry[] | null) {
   };
 
   const startGhost = () => {
-    resetGhost(); // start fresh
+    resetGhost();
     if (!ghost) return;
     startTimeRef.current = performance.now();
     rafRef.current = requestAnimationFrame(step);

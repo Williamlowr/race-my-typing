@@ -8,26 +8,20 @@ import Toast from "./components/UI/Toast";
 import WpmDisplay from "./components/WpmDisplay";
 import { useEngine } from "./hooks/useEngine";
 import OutcomeOverlay from "./components/UI/OutcomeOverlay";
-
-type RaceResult = "win" | "loss" | null;
+import { useFocusGuard } from "./hooks/useFocusGuard";
+import { useRef } from "react";
 
 export default function App() {
   const {
-    level,
-    currentParagraph,
-    results,
-    postRace,
     toast,
-    typed,
-    hasError,
-    correctCount,
-    ghostTypedBuffer,
-    userWpm,
-    ghostWpm,
     setGhost,
     handleTypingChange,
     handleLevelChange,
+    raceState,
   } = useEngine();
+
+  const typingRef = useRef<HTMLTextAreaElement | null>(null);
+  useFocusGuard(typingRef);
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center py-10 gap-6">
@@ -39,39 +33,24 @@ export default function App() {
       <Toast toast={toast} />
 
       <LevelSelector
-        level={level}
-        results={results}
+        level={raceState.level}
+        results={raceState.results}
         onChange={handleLevelChange}
       />
 
-      <GhostReplay level={level} onLoaded={setGhost} />
+      <GhostReplay level={raceState.level} onLoaded={setGhost} />
 
-      <GhostParagraph
-        paragraph={currentParagraph}
-        ghostBuffer={ghostTypedBuffer}
-      />
+      <GhostParagraph race={raceState} />
 
-      <RaceBar
-        paragraphLength={currentParagraph.length}
-        typedLength={correctCount}
-        ghostIndex={ghostTypedBuffer.length}
-        ghostLength={currentParagraph.length}
-      />
+      <RaceBar race={raceState} />
 
-      <WpmDisplay user={userWpm} ghost={ghostWpm} />
+      <WpmDisplay race={raceState} />
 
-      <UserParagraph
-        paragraph={currentParagraph}
-        typed={typed}
-        hasError={hasError}
-      />
+      <UserParagraph race={raceState} />
 
-      <LiveTyping value={typed} onChange={handleTypingChange} />
+      <LiveTyping ref={typingRef} value={raceState.typed} onChange={handleTypingChange} />
 
-      <OutcomeOverlay
-        visible={postRace}
-        result={results[level - 1]}
-      />
+      <OutcomeOverlay visible={raceState.postRace} result={raceState.results[raceState.level - 1]} />
     </div>
   );
 }
