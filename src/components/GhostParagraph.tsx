@@ -3,7 +3,7 @@ import GhostCursor from "./GhostCursor";
 
 interface Props {
   paragraph: string;
-  ghostBuffer: string;
+  ghostBuffer: string[];
 }
 
 export default function GhostParagraph({ paragraph, ghostBuffer }: Props) {

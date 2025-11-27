@@ -1,26 +1,48 @@
 import { useState, useEffect, useRef } from "react";
 import { type GhostEntry } from "../types/GhostEntry";
 
-export default function useGhost(ghost: GhostEntry[] | null, raceStarted: boolean) {
-  const [ghostBuffer, setGhostBuffer] = useState<string[]>([]);
+export default function useGhost(
+  ghost: GhostEntry[] | null,
+  raceStarted: boolean
+) {
+  const [ghostTypedBuffer, setGhostTypedBuffer] = useState<string[]>([]);
+  const [ghostEventBuffer, setGhostEventBuffer] = useState<GhostEntry[]>([]);
+
   const startTimeRef = useRef<number | null>(null);
   const currentIndexRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  const resetGhost = () => {
+    setGhostTypedBuffer([]);
+    setGhostEventBuffer([]);
+    startTimeRef.current = null;
+    currentIndexRef.current = 0;
+  };
 
   useEffect(() => {
-    // Reset anytime ghost changes OR race stops
-    if (!ghost || !raceStarted) {
-      setGhostBuffer([]);
-      startTimeRef.current = null;
-      currentIndexRef.current = 0;
+    if (raceStarted === false && startTimeRef.current !== null) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       return;
     }
 
-    // Only set start time once
+    if (!ghost || !raceStarted) {
+      setGhostTypedBuffer([]);
+      setGhostEventBuffer([]);
+      startTimeRef.current = null;
+      currentIndexRef.current = 0;
+
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      return;
+    }
+
+    // Set start time once
     if (startTimeRef.current === null) {
       startTimeRef.current = performance.now();
     }
 
-    const interval = setInterval(() => {
+    const step = () => {
+      if (!raceStarted) return;
+
       const elapsed = (performance.now() - startTimeRef.current!) / 1000;
 
       while (
@@ -29,25 +51,30 @@ export default function useGhost(ghost: GhostEntry[] | null, raceStarted: boolea
       ) {
         const entry = ghost[currentIndexRef.current];
 
+        setGhostEventBuffer((prev) => [...prev, entry]);
+
         if (entry.keysym === "BackSpace") {
-          setGhostBuffer((prev) => prev.slice(0, -1));
+          setGhostTypedBuffer((prev) => prev.slice(0, -1));
         } else if (entry.keysym === "space") {
-          setGhostBuffer((prev) => [...prev, " "]);
-          } else if (entry.keysym === "period") {
-          setGhostBuffer((prev) => [...prev, "."]);
+          setGhostTypedBuffer((prev) => [...prev, " "]);
+        } else if (entry.keysym === "period") {
+          setGhostTypedBuffer((prev) => [...prev, "."]);
         } else if (entry.keysym.length === 1) {
-          setGhostBuffer((prev) => [...prev, entry.keysym]);
+          setGhostTypedBuffer((prev) => [...prev, entry.keysym]);
         }
-        // ignore shift/ctrl/etc
 
         currentIndexRef.current++;
       }
-    }, 16);
 
-    return () => clearInterval(interval);
+      rafRef.current = requestAnimationFrame(step);
+    };
+
+    rafRef.current = requestAnimationFrame(step);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [ghost, raceStarted]);
 
-  return {
-    ghostBuffer: ghostBuffer.join(""),
-  };
+  return { ghostTypedBuffer, ghostEventBuffer, resetGhost };
 }

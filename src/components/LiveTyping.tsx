@@ -1,5 +1,3 @@
-import React from "react";
-
 interface LiveTypingProps {
   value: string;
   onChange: (v: string) => void;
@@ -12,6 +10,7 @@ export default function LiveTyping({ value, onChange }: LiveTypingProps) {
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Start typing here..."
+      autoFocus
     />
   );
 }
