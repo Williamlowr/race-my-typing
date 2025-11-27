@@ -33,25 +33,23 @@ export default function App() {
         onChange={handleLevelChange}
       />
 
-      <GhostReplay level={raceState.level} onLoaded={setGhost} />
+      <WpmDisplay race={raceState} />
 
       <div className="w-auto max-w-6xl flex flex-col gap-6">
-        <GhostParagraph race={raceState} />
+        <UserParagraph race={raceState} />
+        <LiveTyping
+        ref={typingRef}
+        value={raceState.typed}
+        onChange={handleTypingChange}
+        />
 
         <div className="self-stretch justify-items-center flex flex-col items-center">
           <RaceBar race={raceState} />
         </div>
 
-        <UserParagraph race={raceState} />
+        <GhostReplay level={raceState.level} onLoaded={setGhost} />
+        <GhostParagraph race={raceState} />
       </div>
-
-      <LiveTyping
-        ref={typingRef}
-        value={raceState.typed}
-        onChange={handleTypingChange}
-      />
-
-      <WpmDisplay race={raceState} />
 
       <OutcomeOverlay
         visible={raceState.postRace}

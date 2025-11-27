@@ -15,6 +15,15 @@ export default function RaceBar({ race }: Props) {
 
   return (
     <div className="w-full max-w-3xl space-y-2">
+      {/* User's bar */}
+      <div className="h-3 bg-slate-700 rounded">
+        <div
+          className="h-full bg-blue-500 rounded transition-all duration-200 ease-out"
+          style={{ width: `${userPct}%` }}
+        />
+      </div>
+      <div className="text-xs text-blue-400">You: {userPct.toFixed(1)}%</div>
+
       {/* My bar */}
       <div className="h-3 bg-slate-700 rounded">
         <div
@@ -25,15 +34,6 @@ export default function RaceBar({ race }: Props) {
       <div className="text-xs text-red-400">
         Me: {ghostPct.toFixed(1)}%
       </div>
-
-      {/* User's bar */}
-      <div className="h-3 bg-slate-700 rounded">
-        <div
-          className="h-full bg-blue-500 rounded transition-all duration-200 ease-out"
-          style={{ width: `${userPct}%` }}
-        />
-      </div>
-      <div className="text-xs text-blue-400">You: {userPct.toFixed(1)}%</div>
     </div>
   );
 }

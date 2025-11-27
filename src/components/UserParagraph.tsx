@@ -11,7 +11,7 @@ export default function UserParagraph({ race }: Props) {
 
   return (
     <div className="w-full bg-slate-800 p-6 rounded-lg border border-slate-700">
-      <p className="text-lg text-center">
+      <p className="text-lg font-mono text-center">
         {paragraph.split("").map((char, i) => {
           let className = "";
 
