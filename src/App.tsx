@@ -37,6 +37,7 @@ export default function App() {
 
       <div className="w-auto max-w-6xl flex flex-col gap-6">
         <UserParagraph race={raceState} />
+      </div>
         <LiveTyping
         ref={typingRef}
         value={raceState.typed}
@@ -46,7 +47,7 @@ export default function App() {
         <div className="self-stretch justify-items-center flex flex-col items-center">
           <RaceBar race={raceState} />
         </div>
-
+      <div className="w-auto max-w-6xl flex flex-col gap-6">
         <GhostReplay level={raceState.level} onLoaded={setGhost} />
         <GhostParagraph race={raceState} />
       </div>
