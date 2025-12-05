@@ -7,6 +7,7 @@ export default function useTyping(paragraph: string, onComplete?: () => void) {
   function handleType(nextValue: string) {
     const isDeleting = nextValue.length < typed.length;
 
+    // Handle deletion
     if (isDeleting) {
       setTyped(nextValue);
       if (nextValue.length <= typed.length - 1) {
