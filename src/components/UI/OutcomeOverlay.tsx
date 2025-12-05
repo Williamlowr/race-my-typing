@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default function OutcomeOverlay({ visible, result, hasError }: Props) {
-  const isLoss = hasError || result === "loss"; 
   return (
     <div
       className={`
@@ -28,8 +27,10 @@ export default function OutcomeOverlay({ visible, result, hasError }: Props) {
               ${
                 result === "win"
                   ? "bg-green-500/15"
-                  : isLoss
+                  : result === "loss"
                   ? "bg-red-500/15"
+                  : hasError
+                  ? "bg-yellow-400/20"
                   : "bg-transparent"
               }
             `}
