@@ -10,6 +10,8 @@ import { useWpm } from "./useWpm";
 import { usePostRace } from "./usePostRace";
 import { useRaceLifecycle } from "./useRaceLifecycle";
 
+// useEngine hook manages the overall state and logic of the typing race game; it integrates multiple smaller hooks to handle specific functionalities in one place
+
 // Define the RaceResult types for use in this hook
 type RaceResult = "win" | "loss" | null;
 
